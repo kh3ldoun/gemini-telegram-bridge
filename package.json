@@ -1,15 +1,23 @@
 {
   "name": "gemini-telegram-bridge",
-  "module": "index.ts",
+  "version": "2.0.0",
+  "module": "bridge.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "start":   "bun run bridge.ts",
+    "dev":     "bun --watch bridge.ts",
+    "logs":    "tail -f bridge.log",
+    "status":  "curl -s http://localhost:7823/api/status | bun -e 'const d=await Bun.stdin.json();console.log(JSON.stringify(d,null,2))'",
+    "approve": "bun run -e \"const c=process.argv[1];require('fs').writeFileSync(require('path').join(require('os').homedir(),'.gemini/channels/telegram/approved/'+c),'')\" --"
+  },
+  "dependencies": {
+    "grammy": "^1.42.0"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
-  },
-  "dependencies": {
-    "grammy": "^1.42.0"
   }
 }
